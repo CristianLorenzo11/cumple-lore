@@ -104,6 +104,25 @@
       text-align: center;
       color: var(--texto);
     }
+    .btn-maps {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 22px;
+  border-radius: 22px;
+  background: transparent;
+  border: 2px solid var(--vino);
+  color: var(--vino);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-maps:hover {
+  background: var(--vino);
+  color: #fff;
+}
+
 
     .btn-confirm {
       display: block;
@@ -174,19 +193,41 @@
         </p>
       </section>
 
-      <section>
-        <div class="section-title">Lugar</div>
-        <p>
-          Quinta Los Olivos<br>
-          Atahualpa Yupanqui 717
-        </p>
-      </section>
+<section>
+  <div class="section-title">Lugar</div>
+  <p>
+    Quinta Los Olivos<br>
+    Atahualpa Yupanqui 717
+  </p>
 
-      <section>
-        <a class="btn-confirm" href="#" onclick="confirmar()">
-          Confirmar presencia por WhatsApp
-        </a>
-      </section>
+  <a 
+    class="btn-maps"
+    href="https://www.google.com/maps/place/Quinta+Los+Olivos/@-27.4815423,-55.1023659"
+    target="_blank"
+  >
+    📍 Cómo llegar
+  </a>
+
+  <a 
+  class="btn-maps"
+  href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659"
+  target="_blank"
+>
+  🧭 Ir con GPS
+</a>
+
+</section>
+
+<section>
+  <a class="btn-confirm" onclick="confirmar('si')">
+    ✅ Confirmo asistencia
+  </a>
+
+  <a class="btn-confirm no" onclick="confirmar('no')">
+    ❌ No podré asistir
+  </a>
+</section>
+
 
       <div class="signature">Lore</div>
 
@@ -206,13 +247,22 @@
 
     sections.forEach(section => observer.observe(section));
 
-    function confirmar() {
-      const telefono = "5493755671237";
-      const mensaje = encodeURIComponent(
-        "Hola! Confirmo mi presencia para el cumpleaños 🎉"
-      );
-      window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
-    }
+function confirmar(respuesta) {
+  const telefono = "5493755671237";
+  let mensaje = "";
+
+  if (respuesta === "si") {
+    mensaje = "Hola! Confirmo mi presencia para el cumpleaños 🎉";
+  } else {
+    mensaje = "Hola! Lamentablemente no podré asistir, pero les deseo un hermoso festejo 💖";
+  }
+
+  window.open(
+    `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`,
+    "_blank"
+  );
+}
+
   </script>
 
 </body>
