@@ -18,30 +18,84 @@
       --gris: #999;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
+      min-height: 100vh;
       background: linear-gradient(180deg, var(--vino), var(--vino-oscuro));
       font-family: 'Playfair Display', serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
     }
 
+    /* ===== GLOBOS PANTALLA COMPLETA ===== */
+    .balloons {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -160px;
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.85;
+      animation: floatUp linear forwards;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      width: 2px;
+      height: 18px;
+      background: rgba(0,0,0,0.25);
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-130vh); }
+    }
+
+    /* ===== TARJETA ===== */
     .container {
       max-width: 420px;
-      margin: 0 auto;
-      padding: 40px 16px 60px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
     }
 
     .card {
+      position: relative;
       background: var(--crema);
-      border-radius: 18px;
-      padding: 32px 26px;
+      border-radius: 20px;
+      padding: 36px 26px 60px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.35);
     }
 
-    /* FOTO */
+    /* ===== #40 ===== */
+    .number-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 150px;
+      font-weight: 600;
+      color: rgba(90, 15, 27, 0.08);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
     .photo {
       width: 140px;
       height: 140px;
@@ -68,7 +122,6 @@
     .date {
       text-align: center;
       font-size: 18px;
-      letter-spacing: 1px;
       margin-bottom: 24px;
       color: var(--texto);
     }
@@ -106,74 +159,39 @@
       margin: 0;
     }
 
-    /* ---- LUGAR PRO ---- */
-    .location-name {
-      font-size: 17px;
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 26px;
+      border-radius: 30px;
+      text-decoration: none;
       font-weight: 600;
-      margin-top: 6px;
-    }
-
-    .location-address {
-      font-size: 15px;
-      opacity: 0.85;
-      margin-bottom: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin: 8px auto;
     }
 
     .btn-maps {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      border-radius: 24px;
-      background: transparent;
-      border: 1.8px solid var(--vino);
+      border: 2px solid var(--vino);
       color: var(--vino);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      transition: all 0.25s ease;
     }
 
     .btn-maps:hover {
       background: var(--vino);
       color: #fff;
-      transform: translateY(-1px);
     }
 
-    /* ---- BOTONES CONFIRMAR ---- */
     .btn-confirm {
-      display: block;
-      margin: 18px auto 0;
-      padding: 14px 26px;
-      border-radius: 30px;
       background: var(--whatsapp);
       color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      width: fit-content;
-      transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-      cursor: pointer;
     }
 
-    .btn-confirm:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.35);
-    }
-
-    .btn-confirm.no {
-      background: transparent;
-      color: var(--gris);
-      box-shadow: none;
+    .btn-no {
       border: 1.5px solid var(--gris);
-      font-size: 14px;
-    }
-
-    .btn-confirm.no:hover {
-      background: var(--gris);
-      color: #fff;
+      color: var(--gris);
     }
 
     .signature {
@@ -188,9 +206,15 @@
 
 <body>
 
-  <div class="container">
-    <div class="card">
+<!-- GLOBOS -->
+<div class="balloons" id="balloons"></div>
 
+<div class="container">
+  <div class="card">
+
+    <div class="number-bg">#40</div>
+
+    <div class="content">
       <div class="photo">
         <img src="lore.jpeg" alt="Lore">
       </div>
@@ -201,89 +225,71 @@
       <div class="divider"></div>
 
       <section>
-        <p>
-          Requisito: asistir con la mejor onda y muchas ganas de bailar
-          con música en vivo.
-        </p>
+        <p>Requisito: asistir con la mejor onda y muchas ganas de bailar 🎶</p>
       </section>
 
       <section>
         <div class="section-title">Cena</div>
-        <p>
-          Exquisito servicio de comidas y dulces<br>
-          Bebidas: servicio de cantina
-        </p>
+        <p>Exquisito servicio de comidas y dulces<br>Bebidas: servicio de cantina</p>
       </section>
 
       <section>
         <div class="section-title">Regalo</div>
-        <p>
-          Agradezco sea en efectivo o transferencia
-          para colaborar con mi próximo proyecto.<br>
-          <strong>Alias:</strong> lorenegocionaranja
-        </p>
+        <p>Alias: <strong>lorenegocionaranja</strong></p>
       </section>
 
-      <!-- LUGAR PRO -->
       <section>
         <div class="section-title">Lugar</div>
-        <p class="location-name">Quinta Los Olivos</p>
-        <p class="location-address">Atahualpa Yupanqui 717</p>
-
-        <a
-          class="btn-maps"
-          href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659"
-          target="_blank"
-        >
+        <p>Quinta Los Olivos</p>
+        <a class="btn btn-maps" target="_blank"
+           href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659">
           🧭 Ir con GPS
         </a>
       </section>
 
-      <!-- CONFIRMACIÓN -->
       <section>
-        <a class="btn-confirm" onclick="confirmar('si')">
-          ✅ Confirmo asistencia
-        </a>
-
-        <a class="btn-confirm no" onclick="confirmar('no')">
-          ❌ No podré asistir
-        </a>
+        <a class="btn btn-confirm" onclick="confirmar('si')">✅ Confirmo asistencia</a>
+        <a class="btn btn-no" onclick="confirmar('no')">❌ No podré asistir</a>
       </section>
 
       <div class="signature">Lore</div>
-
     </div>
   </div>
+</div>
 
-  <script>
-    const sections = document.querySelectorAll("section");
+<script>
+  const sections = document.querySelectorAll("section");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
+  }, { threshold: 0.2 });
+  sections.forEach(s => observer.observe(s));
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.2 });
+  function confirmar(r) {
+    const tel = "5493755671237";
+    const msg = r === "si"
+      ? "Hola! Confirmo mi presencia para el cumpleaños 🎉"
+      : "Hola! No podré asistir, pero les deseo un hermoso festejo 💖";
+    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
 
-    sections.forEach(section => observer.observe(section));
+  const colors = ["#ff6f91", "#ffc75f", "#845ec2", "#4d96ff", "#6bcf63"];
+  const balloons = document.getElementById("balloons");
 
-    function confirmar(respuesta) {
-      const telefono = "5493755671237";
-      let mensaje = "";
+  function createBalloon() {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    const size = Math.random() * 30 + 35;
+    b.style.width = size + "px";
+    b.style.height = size * 1.3 + "px";
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.background = colors[Math.floor(Math.random() * colors.length)];
+    b.style.animationDuration = (Math.random() * 10 + 14) + "s";
+    balloons.appendChild(b);
+    setTimeout(() => b.remove(), 30000);
+  }
 
-      if (respuesta === "si") {
-        mensaje = "Hola! Confirmo mi presencia para el cumpleaños 🎉";
-      } else {
-        mensaje = "Hola! Lamentablemente no podré asistir, pero les deseo un hermoso festejo 💖";
-      }
-
-      window.open(
-        `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`,
-        "_blank"
-      );
-    }
-  </script>
+  setInterval(createBalloon, 900);
+</script>
 
 </body>
 </html>
