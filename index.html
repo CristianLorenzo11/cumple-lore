@@ -15,6 +15,7 @@
       --crema: #f7f3ef;
       --texto: #2b2b2b;
       --whatsapp: #25D366;
+      --gris: #999;
     }
 
     * {
@@ -84,6 +85,7 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.8s ease;
+      text-align: center;
     }
 
     section.visible {
@@ -95,38 +97,54 @@
       font-weight: 600;
       color: var(--vino);
       margin-bottom: 6px;
-      text-align: center;
     }
 
     p {
       font-size: 16px;
       line-height: 1.6;
-      text-align: center;
       color: var(--texto);
+      margin: 0;
     }
+
+    /* ---- LUGAR PRO ---- */
+    .location-name {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .location-address {
+      font-size: 15px;
+      opacity: 0.85;
+      margin-bottom: 14px;
+    }
+
     .btn-maps {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 22px;
-  border-radius: 22px;
-  background: transparent;
-  border: 2px solid var(--vino);
-  color: var(--vino);
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 600;
-  transition: all 0.25s ease;
-}
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 24px;
+      background: transparent;
+      border: 1.8px solid var(--vino);
+      color: var(--vino);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      transition: all 0.25s ease;
+    }
 
-.btn-maps:hover {
-  background: var(--vino);
-  color: #fff;
-}
+    .btn-maps:hover {
+      background: var(--vino);
+      color: #fff;
+      transform: translateY(-1px);
+    }
 
-
+    /* ---- BOTONES CONFIRMAR ---- */
     .btn-confirm {
       display: block;
-      margin: 30px auto 0;
+      margin: 18px auto 0;
       padding: 14px 26px;
       border-radius: 30px;
       background: var(--whatsapp);
@@ -137,11 +155,25 @@
       width: fit-content;
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+      cursor: pointer;
     }
 
     .btn-confirm:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+    }
+
+    .btn-confirm.no {
+      background: transparent;
+      color: var(--gris);
+      box-shadow: none;
+      border: 1.5px solid var(--gris);
+      font-size: 14px;
+    }
+
+    .btn-confirm.no:hover {
+      background: var(--gris);
+      color: #fff;
     }
 
     .signature {
@@ -159,7 +191,6 @@
   <div class="container">
     <div class="card">
 
-      <!-- FOTO -->
       <div class="photo">
         <img src="lore.jpeg" alt="Lore">
       </div>
@@ -193,35 +224,31 @@
         </p>
       </section>
 
-<section>
-  <div class="section-title">Lugar</div>
-  <p>
-    Quinta Los Olivos<br>
-    Atahualpa Yupanqui 717
-  </p>
+      <!-- LUGAR PRO -->
+      <section>
+        <div class="section-title">Lugar</div>
+        <p class="location-name">Quinta Los Olivos</p>
+        <p class="location-address">Atahualpa Yupanqui 717</p>
 
+        <a
+          class="btn-maps"
+          href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659"
+          target="_blank"
+        >
+          🧭 Ir con GPS
+        </a>
+      </section>
 
+      <!-- CONFIRMACIÓN -->
+      <section>
+        <a class="btn-confirm" onclick="confirmar('si')">
+          ✅ Confirmo asistencia
+        </a>
 
-  <a 
-  class="btn-maps"
-  href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659"
-  target="_blank"
->
-  🧭 Ir con GPS
-</a>
-
-</section>
-
-<section>
-  <a class="btn-confirm" onclick="confirmar('si')">
-    ✅ Confirmo asistencia
-  </a>
-
-  <a class="btn-confirm no" onclick="confirmar('no')">
-    ❌ No podré asistir
-  </a>
-</section>
-
+        <a class="btn-confirm no" onclick="confirmar('no')">
+          ❌ No podré asistir
+        </a>
+      </section>
 
       <div class="signature">Lore</div>
 
@@ -241,22 +268,21 @@
 
     sections.forEach(section => observer.observe(section));
 
-function confirmar(respuesta) {
-  const telefono = "5493755671237";
-  let mensaje = "";
+    function confirmar(respuesta) {
+      const telefono = "5493755671237";
+      let mensaje = "";
 
-  if (respuesta === "si") {
-    mensaje = "Hola! Confirmo mi presencia para el cumpleaños 🎉";
-  } else {
-    mensaje = "Hola! Lamentablemente no podré asistir, pero les deseo un hermoso festejo 💖";
-  }
+      if (respuesta === "si") {
+        mensaje = "Hola! Confirmo mi presencia para el cumpleaños 🎉";
+      } else {
+        mensaje = "Hola! Lamentablemente no podré asistir, pero les deseo un hermoso festejo 💖";
+      }
 
-  window.open(
-    `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`,
-    "_blank"
-  );
-}
-
+      window.open(
+        `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`,
+        "_blank"
+      );
+    }
   </script>
 
 </body>
