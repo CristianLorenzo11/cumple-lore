@@ -16,6 +16,7 @@
       --texto: #2b2b2b;
       --whatsapp: #25D366;
       --gris: #999;
+      --bg-soft: #f1e8e4;
     }
 
     * { box-sizing: border-box; }
@@ -30,23 +31,20 @@
       padding: 40px 16px;
     }
 
-    /* ===== CONTENEDOR ===== */
     .container {
       max-width: 420px;
       width: 100%;
     }
 
-    /* ===== TARJETA ===== */
     .card {
       position: relative;
       background: var(--crema);
       border-radius: 22px;
-      padding: 42px 28px 60px;
+      padding: 42px 26px 60px;
       box-shadow: 0 25px 55px rgba(0,0,0,0.35);
       overflow: hidden;
     }
 
-    /* ===== #40 DECORATIVO ===== */
     .number-bg {
       position: absolute;
       top: 50%;
@@ -54,9 +52,8 @@
       transform: translate(-50%, -50%);
       font-size: 150px;
       font-weight: 600;
-      color: rgba(90, 15, 27, 0.07);
+      color: rgba(90, 15, 27, 0.06);
       pointer-events: none;
-      z-index: 0;
     }
 
     .content {
@@ -65,7 +62,6 @@
       text-align: center;
     }
 
-    /* ===== FOTO ===== */
     .photo {
       width: 150px;
       height: 150px;
@@ -81,17 +77,16 @@
       object-fit: cover;
     }
 
-    /* ===== TITULOS ===== */
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 44px;
       color: var(--vino);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .date {
       font-size: 18px;
-      margin-bottom: 26px;
+      margin-bottom: 22px;
       color: var(--texto);
     }
 
@@ -103,17 +98,22 @@
       opacity: 0.8;
     }
 
-    /* ===== SECCIONES ===== */
     section {
-      margin-bottom: 30px;
+      margin-bottom: 22px;
       opacity: 0;
-      transform: translateY(35px);
-      transition: all 0.8s ease;
+      transform: translateY(30px);
+      transition: all 0.7s ease;
     }
 
     section.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .box {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 18px;
     }
 
     .section-title {
@@ -130,7 +130,12 @@
       margin: 0;
     }
 
-    /* ===== BOTONES ===== */
+    .countdown {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--vino);
+    }
+
     .btn {
       display: inline-flex;
       justify-content: center;
@@ -191,42 +196,50 @@
     <div class="number-bg">#40</div>
 
     <div class="content">
+
       <div class="photo">
         <img src="lore.jpeg" alt="Lore">
       </div>
 
-      <h1>Vení, vamos a festejar mi cumpleaños</h1>
-      <div class="date">25 de enero · 19:00 hs</div>
+      <h1>Vení, vamos a festejar mi cumpleaños  <br> #40 </br> </h1>
+      <div class="date">📅 25 de enero · ⏰ 19:00 hs</div>
 
       <div class="divider"></div>
 
-      <section>
-        Requisito: asistir con la mejor onda y muchas ganas de bailar
-          con música en vivo 🎶
+      <section class="box">
+        🎶 Requisito: asistir con la mejor onda y muchas ganas de bailar  
+        con música en vivo
       </section>
 
-      <section>
-        <div class="section-title">Cena</div>
+      <section class="box">
+        <div class="section-title">🍽️ Cena</div>
         <p>
           Exquisito servicio de comidas y dulces<br>
           Bebidas: servicio de cantina
         </p>
       </section>
 
-      <section>
-        <div class="section-title">Regalo</div>
-         Agradezco sea en efectivo o transferencia
-          para colaborar con mi próximo proyecto.<br>
+      <section class="box">
+        <div class="section-title">🎁 Regalo</div>
+        <p>
+          Agradezco sea en efectivo o transferencia<br>
+          para colaborar con mi próximo proyecto.<br><br>
           <strong>Alias:</strong> lorenegocionaranja
+        </p>
       </section>
 
-      <section>
-        <div class="section-title">Lugar</div>
+      <section class="box">
+        <div class="section-title">📍 Lugar</div>
         <p>Quinta Los Olivos</p>
         <a class="btn btn-maps" target="_blank"
            href="https://www.google.com/maps/dir/?api=1&destination=-27.4815423,-55.1023659">
           🧭 Ir con GPS
         </a>
+      </section>
+
+      <section class="box">
+        <div class="section-title">⏳ Falta</div>
+        <div class="countdown" id="contador"></div>
       </section>
 
       <section>
@@ -260,6 +273,26 @@
       : "Hola! No podré asistir, pero les deseo un hermoso festejo 💖";
     window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
   }
+
+  // Contador regresivo
+  const evento = new Date("2026-01-25T19:00:00").getTime();
+  const contador = document.getElementById("contador");
+
+  setInterval(() => {
+    const ahora = new Date().getTime();
+    const diff = evento - ahora;
+
+    if (diff <= 0) {
+      contador.innerHTML = "🎉 ¡Hoy es el gran día!";
+      return;
+    }
+
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diff / (1000 * 60)) % 60);
+
+    contador.innerHTML = `${dias} días · ${horas} hs · ${minutos} min`;
+  }, 1000);
 </script>
 
 </body>
